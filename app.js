@@ -5,9 +5,9 @@ import { albums } from "./allData/albums.js";
 import { photos } from "./allData/photos.js"
 import { todos } from "./allData/todos.js";
 import { users } from "./allData/users.js";
-
+import {dotenv} from "dotenv";
 const app = express();
-
+dotenv.config();
 
 
 // Routes 
@@ -28,9 +28,9 @@ app.get('/posts', (req, res) => {
     res.status(200).send({status:true,allPosts:posts})
 })
 
-// app.get('*', (req, res) => {
-//     res.status(404).send({message:"page not found"})
-// })
+app.get('*', (req, res) => {
+    res.status(404).send({message:"page not found"})
+})
 
 
 
@@ -76,9 +76,7 @@ app.get('/users', (req, res) => {
     }
 });
 
-
-
-//server listner
-app.listen(8080, () => {
+const PORT =process.env.PORT
+app.listen(PORT, () => {
     console.log("server started ")
 })
