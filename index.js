@@ -1,82 +1,16 @@
 import express from "express";
-import { products } from "./products.js";
-import { posts } from "./allData/post.js";
-import { albums } from "./allData/albums.js";
-import { photos } from "./allData/photos.js"
-import { todos } from "./allData/todos.js";
-import { users } from "./allData/users.js";
-import {dotenv} from "dotenv";
-const app = express();
+import dotenv from "dotenv";
+import CommentRoute from "./Routes/CommentsRoute.js";
 dotenv.config();
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-
-// Routes 
-
-app.get('/', (req, res) => {
-    res.send(`<div>
-    <h1>My all api</h1>
-    <ul>
-    <li>Post : localhost:8080/post</li>
-    </ul>
-    </div>`)
-})
-app.get('/products', (req, res) => {
-    res.status(200).send({ user:{name:"sadiq",age:23},status:"success", allProducts:products})
-})
-
-app.get('/posts', (req, res) => {
-    res.status(200).send({status:true,allPosts:posts})
-})
-
-app.get('*', (req, res) => {
-    res.status(404).send({message:"page not found"})
-})
-
-
-
-
-app.get('/products/:id', (req, res) => {
-    res.status(200).send(`my id is ${data?.id}`)
-})
-
-app.get('/albums', (req, res) => {
-    console.log('Accessing /albums route');
-    console.log('Albums data:', albums);
-
-    if (albums && albums.length > 0) {
-        res.status(200).send({ albums });
-    } else {
-        res.status(404).send({ message: "No albums found" });
-    }
+app.get("/",(req, res)=>{
+    res.send("HELLO FROM MOHSIN");
 });
 
-app.get('/photos', (req, res) => {
+app.use("/comment", CommentRoute);
 
-    if (photos && photos.length > 0) {
-        res.status(200).send({ photos });
-    } else {
-        res.status(404).send({ message: "No photos found" });
-    }
-});
-app.get('/todos', (req, res) => {
-
-    if (todos && todos.length > 0) {
-        res.status(200).send({ todos });
-    } else {
-        res.status(404).send({ message: "No todos found" });
-    }
-});
-
-app.get('/users', (req, res) => {
-
-    if (users && users.length > 0) {
-        res.status(200).send({ users });
-    } else {
-        res.status(404).send({ message: "No users found" });
-    }
-});
-
-const PORT =process.env.PORT
-app.listen(PORT, () => {
-    console.log("server started ")
+app.listen(PORT,()=>{
+    console.log(`server start with mohsin ${PORT}`)
 })
